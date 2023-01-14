@@ -1,6 +1,11 @@
 import Speaker from "./Speaker";
 
-function SpeakersList({data}) {
+function SpeakersList({
+  data,
+  showSessions,
+  setShowSessions
+
+}) {
     return (
         <div className="container speakers-list">
           <div className="row">
