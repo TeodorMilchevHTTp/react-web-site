@@ -1,29 +1,35 @@
 import Speaker from "./Speaker";
-import {data} from '../../SpeakerData';
-import { useState, useEffect } from "react";
+import ReactPlaceHolder from 'react-placeholder';
+import useRequestSpeakers from "../hooks/useRequestSpeakers";
 
 function SpeakersList({showSessions}) {
-  
-  const [speakerData, setSpeakerData] = useState([]);
 
-  function onFavoriteToggle(id){
-    const speakerRecPrevious = speakerData.find(function(rec) {
-      return rec.id === id;
-    });
-    const speakerRecUpdated = {
-      ...speakerRecPrevious,
-      favorite: !speakerRecPrevious.favorite
-    };
-    const speakerDataNew = speakerData.map(function(rec) {
-      return rec.id === id
-             ?speakerRecUpdated
-             :rec;
-    });
-    setSpeakerData(speakerDataNew);
+  const{
+    speakerData,
+    isLoading,
+    hasError,
+    errMessage,
+    onFavoriteToggle
+  } = useRequestSpeakers(2000);
+
+  if(hasError === true) {
+    return(
+      <div className="text-danger">
+      ERROR: <b>Loading Speaker Data Failed: {errMessage}</b>
+      </div>
+    )
+    
   }
+
 
   return (
         <div className="container speakers-list">
+          <ReactPlaceHolder
+          type='media'
+          rows={15}
+          className='speakerslist-placeholder'
+          ready={isLoading===false}
+          >
           <div className="row">
             {speakerData.map(function (speaker) {
               return(
@@ -38,6 +44,7 @@ function SpeakersList({showSessions}) {
               ) 
             })}
           </div>
+        </ReactPlaceHolder>
         </div>
     )
 }
