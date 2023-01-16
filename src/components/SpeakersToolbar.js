@@ -1,8 +1,9 @@
+
 function SpeakersToolbar({
-  showSessions,
-  setShowSessions,
   theme,
-  setTheme
+  setTheme,
+  showSessions,
+  setShowSessions
 }) {
     return (
         <section className="toolbar dark-theme-header">
